@@ -16,9 +16,10 @@ class CreateItemsTable extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
+            $table->text('description')->nullable();
             $table->bigInteger('category_id')->nullable();
             $table->bigInteger('quantity_type_id')->nullable();
-            $table->text('description')->nullable();
+            $table->bigInteger('shop_id')->nullable();
             $table->string('price')->nullable();
             $table->string('quantity')->nullable();
             $table->string('discount')->nullable();

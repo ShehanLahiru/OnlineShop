@@ -47,4 +47,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    public function getImageUrlAttribute($value)
+    {
+        if($value){
+            return config('app.url').$value;
+        }
+    }
 }
