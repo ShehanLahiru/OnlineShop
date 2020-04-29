@@ -13,12 +13,12 @@ class Item extends Model
 
     public function shop()
     {
-        return $this->hasMany('App\Shop', 'shop_id', 'id');
+        return $this->hasMany('App\Shop', 'id', 'shop_id');
 
     }
     public function itemCategory()
     {
-        return $this->has('App\ItemCategory', 'category_id', 'id');
+        return $this->hasOne('App\ItemCategory', 'id', 'category_id');
 
     }
     public function quantityType()

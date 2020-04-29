@@ -19,7 +19,7 @@ class CreateItemsTable extends Migration
             $table->text('description')->nullable();
             $table->bigInteger('category_id')->nullable();
             $table->bigInteger('shop_id')->nullable();
-            $table->string('price')->nullable();
+            $table->decimal('price')->nullable();
             $table->string('quantity')->nullable();
             $table->string('quantity_type')->nullable();
             $table->string('discount')->nullable();
