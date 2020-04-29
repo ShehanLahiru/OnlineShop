@@ -128,6 +128,25 @@ class UserController extends Controller
             return APIHelper::makeAPIResponse(false, "Service error", null, 500);
         }
     }
+     public function updateImage(Request $request){
+
+        try{
+
+            $user = User::find(auth()->user()->id);
+
+            if( $request->hasFile('image') ){
+
+                $url = APIHelper::uploadFileToStorage($request->file('image'), 'public/common_media');
+                $user->image_url = $url;
+              }
+            $saved = $user->save();
+            return APIHelper::makeAPIResponse(true, "User Profile Updated",null, 200);
+        } catch (\Exception $e) {
+            report($e);
+            return APIHelper::makeAPIResponse(false, "Service error", null, 500);
+        }
+
+     }
 
 
 

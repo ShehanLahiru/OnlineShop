@@ -20,7 +20,7 @@ class APIHelper
 {
 
     public static function makeAPIResponse($status = true, $message = "Done", $data = null, $status_code = 200)
-    { 
+    {
         $response = [
             "success" => $status,
             "message" => $message,
@@ -56,30 +56,30 @@ class APIHelper
         return $response;
     }
 
-    public static function uploadMultipleFileToStorage($images, $path,$id)
-    {
-        if(isset($images) && $images !== null){
-            foreach($images as $key => $image){
-                $disk = Storage::disk('local');
-                $result = $disk->putFileAs($path, $image, md5(time()+ rand()). ($image->getClientOriginalExtension() !== null ? '.'.$image->getClientOriginalExtension() : ''));
-                if ($result) {
-                    $url = $disk->url($result);
-                    $reSizePath = public_path(''.$url);
-                    $uploaded_file = Image::make($reSizePath)->resize(100, 100, function($constraint) {
-                        $constraint->aspectRatio();
-                    });
-                    $uploaded_file->save($reSizePath);
+    // public static function uploadMultipleFileToStorage($images, $path,$id)
+    // {
+    //     if(isset($images) && $images !== null){
+    //         foreach($images as $key => $image){
+    //             $disk = Storage::disk('local');
+    //             $result = $disk->putFileAs($path, $image, md5(time()+ rand()). ($image->getClientOriginalExtension() !== null ? '.'.$image->getClientOriginalExtension() : ''));
+    //             if ($result) {
+    //                 $url = $disk->url($result);
+    //                 $reSizePath = public_path(''.$url);
+    //                 $uploaded_file = Image::make($reSizePath)->resize(100, 100, function($constraint) {
+    //                     $constraint->aspectRatio();
+    //                 });
+    //                 $uploaded_file->save($reSizePath);
 
-                    $image = EquipmentImage::updateOrCreate(
-                        ['equ_id'=>$id,'image_name'=>$key],
-                        ['image_url' =>  $url]
-                    );;
+    //                 $image = EquipmentImage::updateOrCreate(
+    //                     ['equ_id'=>$id,'image_name'=>$key],
+    //                     ['image_url' =>  $url]
+    //                 );;
 
-                }
-            }
-        }
+    //             }
+    //         }
+    //     }
 
-    }
+    // }
 
     public static function uploadFileToStorage($uploaded_file, $path)
     {

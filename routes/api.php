@@ -30,6 +30,7 @@ Route::middleware(['jwt'])->group(function (){
         Route::post('/updateUser', 'APIController\UserController@updateUser');
         Route::delete('/destroy', 'APIController\UserController@destroy');
         Route::get('/logout', 'APIController\UserController@logout');
+        Route::post('/updateImage', 'APIController\UserController@updateImage');
 
 
         Route::get('/getAllShop', 'APIController\ShopController@getAllShop');
