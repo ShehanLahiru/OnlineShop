@@ -30,6 +30,13 @@ Route::middleware(['jwt'])->group(function (){
         Route::post('/updateUser', 'APIController\UserController@updateUser');
         Route::delete('/destroy', 'APIController\UserController@destroy');
         Route::get('/logout', 'APIController\UserController@logout');
+
+
+        Route::get('/getAllShop', 'APIController\ShopController@getAllShop');
+        Route::get('/getShopById/{shop_id}', 'APIController\ShopController@getShopById');
+
+        Route::get('/getAllItem/{shop_id}', 'APIController\ItemController@getAllItem');
+        Route::get('/getItemById/{item_id}', 'APIController\ItemController@getItemById');
     });
 
 });
