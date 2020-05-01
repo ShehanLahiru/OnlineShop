@@ -1,0 +1,13 @@
+.custom-file-input{
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.custom-file-input2{
+    width: 0 !important;
+    height: 0 !important;
+}
+
+#ofBar{
+    display: none !important;
+}
