@@ -9,7 +9,18 @@
     </div>
     <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-           
+            <li class="@if ($activePage == 'home') active @endif">
+                <a href="{{ route('backend.home') }}">
+                    <i class="now-ui-icons design_app"></i>
+                    <p>{{ __('Dashboard') }}</p>
+                </a>
+            </li>
+            <li class="@if ($activePage == 'shops') active @endif">
+                <a href="{{ route('backend.shops.index') }}">
+                    <i class="fas fa-music"></i>
+                    <p>{{ __('Shops') }}</p>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

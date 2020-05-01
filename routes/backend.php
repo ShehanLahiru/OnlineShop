@@ -28,7 +28,7 @@ Route::post('logout', 'Backend\Auth\LoginController@logout')->name('backend.logo
     Route::get('/home', 'Backend\HomeController@home')->name('backend.home');
 
     //traditional songs
-    Route::resource('traditional_songs', 'Backend\TraditionalSongController', ['as' => 'backend']);
-    
+    Route::resource('shops', 'Backend\ShopController', ['as' => 'backend']);
+
 // });
 
