@@ -55,8 +55,10 @@ class UserController extends Controller
 
                     return APIHelper::makeAPIResponse(false, "Invalid credentials", null, 401);
                 } else {
-
-                    return APIHelper::makeAPIResponse(true, "Logged in", $token, 200);
+                    $data = array();
+                    $data['name'] = $user->name;
+                    $data['token'] = $token;
+                    return APIHelper::makeAPIResponse(true, "Logged in", $data, 200);
                 }
             } else {
                 return APIHelper::makeAPIResponse(false, "Invalid credentials", null, 401);
