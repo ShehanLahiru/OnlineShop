@@ -59,9 +59,9 @@
             </p>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{{ route('backend.profile.edit') }}">{{ __("My profile") }}</a>
+            {{-- <a class="dropdown-item" href="{{ route('backend.profile.edit') }}">{{ __("My profile") }}</a>
             <a class="dropdown-item" href="{{ route('backend.profile.edit') }}">{{ __("Edit profile") }}</a>
-            <a class="dropdown-item" href="{{ route('backend.logout') }}"
+            <a class="dropdown-item" href="{{ route('backend.logout') }}" --}}
             onclick="event.preventDefault();
                           document.getElementById('logout-form').submit();">
               {{ __('Logout') }}
