@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\APIController;
+
 use App\User;
 use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
@@ -20,42 +21,47 @@ class UserController extends Controller
     {
         $this->jwt = $jwt;
     }
-    public function login(Request $request) {
-        $user = User::where('email',$request->email)->first();
+    public function login(Request $request)
+    {
+        if (!$request->password) {
 
-        if($user){
+            return APIHelper::makeAPIResponse(false, "Password required", null, 401);
+        } else {
+            $user = User::where('email', $request->email)->first();
+
+            if ($user) {
 
                 $id = $user->id;
                 $user_type = $user->user_type;
                 $email = $request->input('email');
                 $password = $request->input('password');
-                $credentials = request(['email', 'password'],$user_type);
+                $credentials = request(['email', 'password'], $user_type);
 
                 $payload = $this->jwt->factory()
-                            ->setTTL(60)
-                            ->customClaims([
-                                'sub' => $id,
-                                'data' => [
-                                    'email' => $email,
-                                    'password' => $password,
-                                    'user_type' => $user_type,
-                                ]
-                            ])
-                            ->make();
+                    ->setTTL(60)
+                    ->customClaims([
+                        'sub' => $id,
+                        'data' => [
+                            'email' => $email,
+                            'password' => $password,
+                            'user_type' => $user_type,
+                        ]
+                    ])
+                    ->make();
 
-                        $token = $this->jwt->manager()->encode($payload)->get();
+                $token = $this->jwt->manager()->encode($payload)->get();
 
+                if (!$token = auth('api')->attempt($credentials)) {
+
+                    return APIHelper::makeAPIResponse(false, "Invalid credentials", null, 401);
+                } else {
+
+                    return APIHelper::makeAPIResponse(true, "Logged in", $token, 200);
+                }
+            } else {
+                return APIHelper::makeAPIResponse(false, "Invalid credentials", null, 401);
+            }
         }
-        else{
-            return APIHelper::makeAPIResponse(false, "Invalid credentials",null, 401);
-        }
-
-        // if (!$token = auth('api')->attempt($credentials)) {
-
-        //     return APIHelper::makeAPIResponse(false, "Invalid credentials",null, 401);
-        // }
-
-            return APIHelper::makeAPIResponse(true, "Logged in",$token, 200);
     }
 
     public function register(CreateUserRequest $request)
@@ -81,11 +87,10 @@ class UserController extends Controller
     public function userProfile(Request $request)
     {
         try {
-             $user = User::find($request->current_user_id);
+            $user = User::find($request->current_user_id);
 
-            return APIHelper::makeAPIResponse(true, "User Details Found",$user, 200);
-        }
-        catch (\Exception $e) {
+            return APIHelper::makeAPIResponse(true, "User Details Found", $user, 200);
+        } catch (\Exception $e) {
             report($e);
             return APIHelper::makeAPIResponse(false, "Service error", null, 500);
         }
@@ -93,7 +98,7 @@ class UserController extends Controller
 
     public function updateUser(UpdateUserRequest $request)
     {
-       try{
+        try {
 
             $user = User::find(auth()->user()->id);
             $user->name = $request->input('name');
@@ -101,7 +106,7 @@ class UserController extends Controller
             $user->address = $request->input('address');
             $user->contact_no = $request->input('contact_no');
             $user->password = bcrypt($request->input('password'));
-            if( $request->hasFile('image') ){
+            if ($request->hasFile('image')) {
 
                 $url = APIHelper::uploadFileToStorage($request->file('image'), 'public/common_media');
                 $user->image_url = $url;
@@ -112,7 +117,8 @@ class UserController extends Controller
             report($e);
             return APIHelper::makeAPIResponse(false, "Service error", null, 500);
         }
-    }public function destroy(Request $request)
+    }
+    public function destroy(Request $request)
     {
         try {
             $user = User::find($request->current_user_id);
@@ -128,25 +134,25 @@ class UserController extends Controller
             return APIHelper::makeAPIResponse(false, "Service error", null, 500);
         }
     }
-     public function updateImage(Request $request){
+    public function updateImage(Request $request)
+    {
 
-        try{
+        try {
 
             $user = User::find(auth()->user()->id);
 
-            if( $request->hasFile('image') ){
+            if ($request->hasFile('image')) {
 
                 $url = APIHelper::uploadFileToStorage($request->file('image'), 'public/common_media');
                 $user->image_url = $url;
-              }
+            }
             $saved = $user->save();
-            return APIHelper::makeAPIResponse(true, "User Profile Updated",null, 200);
+            return APIHelper::makeAPIResponse(true, "User Profile Updated", null, 200);
         } catch (\Exception $e) {
             report($e);
             return APIHelper::makeAPIResponse(false, "Service error", null, 500);
         }
-
-     }
+    }
 
 
 
@@ -156,10 +162,9 @@ class UserController extends Controller
         try {
             JWTAuth::invalidate($request->token);
 
-            return APIHelper::makeAPIResponse(true, "User logged out successfully",null, 200);
-        }
-        catch (JWTException $exception) {
-            return APIHelper::makeAPIResponse(false, "Sorry, the user cannot be logged out",null, 500);
+            return APIHelper::makeAPIResponse(true, "User logged out successfully", null, 200);
+        } catch (JWTException $exception) {
+            return APIHelper::makeAPIResponse(false, "Sorry, the user cannot be logged out", null, 500);
         }
     }
 }
