@@ -38,7 +38,7 @@ class UserController extends Controller
                 $credentials = request(['email', 'password'], $user_type);
 
                 $payload = $this->jwt->factory()
-                    ->setTTL(60)
+                    ->setTTL(60 * 24 * 365)
                     ->customClaims([
                         'sub' => $id,
                         'data' => [
