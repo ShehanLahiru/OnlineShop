@@ -12,6 +12,8 @@ use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\BackendRequest\CreateItemRequest;
+
 
 class ItemController extends Controller
 {
@@ -54,7 +56,7 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateItemRequest $request)
     {
         $item = new Item();
         $item->name = $request->input("name");
@@ -118,7 +120,7 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateItemRequest $request, $id)
     {
         $item = Item::find($id);
         $item->name = $request->input("name");

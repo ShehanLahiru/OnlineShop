@@ -9,6 +9,7 @@ use App\ItemCategory;
 use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BackendRequest\CreateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -34,7 +35,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
         $category = new ItemCategory();
         $category->name = $request->input("name");
@@ -77,7 +78,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateCategoryRequest $request, $id)
     {
         $category = ItemCategory::find($id);
         $category->name = $request->input("name");
