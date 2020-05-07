@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', 'APIController\UserController@login');
 Route::post('/register', 'APIController\UserController@register');
+Route::post('/addImage/{item_id}', 'APIController\ItemController@addImage');
 
 
 Route::middleware(['jwt'])->group(function (){

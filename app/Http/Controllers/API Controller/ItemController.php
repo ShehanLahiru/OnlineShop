@@ -34,4 +34,20 @@ class ItemController extends Controller
             return APIHelper::makeAPIResponse(false, "Service error", null, 500);
         }
     }
+    public function addImage(Request $request,$id){
+
+        $item = Item::find($id);
+        $url = APIHelper::uploadFileToStorage($request->file('image'), 'public/common_media');
+        $item->image_url = $url;
+         $save = $item->save();
+         if($save){
+            return APIHelper::makeAPIResponse(true, "Item updated",null, 200);
+         }
+         else{
+            return APIHelper::makeAPIResponse(false, "false",null, 404);
+         }
+
+
+
+    }
 }
