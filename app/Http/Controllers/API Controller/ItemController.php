@@ -12,7 +12,7 @@ class ItemController extends Controller
     public function getAllItem($id)
     {
        try {
-             $item = Item::with('itemCategory:id,name','shop:id,name')->where('shop_id',$id)->get();
+             $item = Item::with('itemCategory:id','shop:id')->where('shop_id',$id)->get();
 
             return APIHelper::makeAPIResponse(true, "All Items",$item, 200);
         }
