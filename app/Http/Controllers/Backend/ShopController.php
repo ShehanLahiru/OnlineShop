@@ -72,8 +72,9 @@ class ShopController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::user()->user_type = 'super_admin') {
+        if (Auth::user()->user_type == 'super_admin') {
             $shop = Shop::find($id);
+            dd(Auth::user()->user_type);
             return view('backend.pages.shops.edit', ["shop" => $shop]);
         } else {
             return view('backend.pages.shops.index')->with(session()->flash('error', 'You are not authorized to edit a shop'));
@@ -110,7 +111,7 @@ class ShopController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::user()->user_type = 'super_admin') {
+        if (Auth::user()->user_type == 'super_admin') {
             $result = Shop::find($id)->delete();
             if ($result) {
                 return redirect()->route('backend.shops.index')->with(session()->flash('success', 'Shop Deleted!'));

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Category;
-// use App\Http\Requests\CMS\RiddleCreateRequest;
-// use App\Http\Requests\CMS\RiddleUpdateRequest;
 use App\ItemCategory;
 use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
@@ -16,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = ItemCategory::paginate(10);
-        return view('backend.pages.categories.index',["categories"=>$categories]);
+        return view('backend.pages.categories.index', ["categories" => $categories]);
     }
 
     /**
@@ -68,7 +66,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = ItemCategory::find($id);
-        return view('backend.pages.categories.edit',["category"=>$category]);
+        return view('backend.pages.categories.edit', ["category" => $category]);
     }
 
     /**

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Item;
-// use App\Http\Requests\CMS\RiddleCreateRequest;
-// use App\Http\Requests\CMS\RiddleUpdateRequest;
 use App\Shop;
 use App\Category;
 use App\ItemCategory;
@@ -21,14 +19,12 @@ class ItemController extends Controller
     {
         $user = Auth::user();
 
-        if($user->user_type==('super_admin')){
+        if ($user->user_type == ('super_admin')) {
             $items = Item::all();
+        } else {
+            $items = Item::all()->where('shop_id', $user->shop_id);
         }
-        else{
-            $items = Item::all()->where('shop_id',$user->shop_id);
-        }
-        return view('backend.pages.items.index',["items"=>$items,]);
-
+        return view('backend.pages.items.index', ["items" => $items,]);
     }
 
     /**
@@ -41,13 +37,12 @@ class ItemController extends Controller
         $user = Auth::user();
         $categories = ItemCategory::all();
 
-        if($user->user_type==('super_admin')){
+        if ($user->user_type == ('super_admin')) {
             $shops = Shop::all();
-        }
-        else{
+        } else {
             $shops = $user->shop_id;
         }
-        return view('backend.pages.items.create',["categories"=>$categories,"shops"=>$shops,]);
+        return view('backend.pages.items.create', ["categories" => $categories, "shops" => $shops,]);
     }
 
     /**
@@ -103,13 +98,12 @@ class ItemController extends Controller
         $user = Auth::user();
         $categories = ItemCategory::all();
 
-        if($user->user_type==('super_admin')){
+        if ($user->user_type == ('super_admin')) {
             $shops = Shop::all();
-        }
-        else{
+        } else {
             $shops = $user->shop_id;
         }
-        return view('backend.pages.items.edit',["categories"=>$categories,"shops"=>$shops,"item"=>$item]);
+        return view('backend.pages.items.edit', ["categories" => $categories, "shops" => $shops, "item" => $item]);
     }
 
 
