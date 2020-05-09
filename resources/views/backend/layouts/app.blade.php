@@ -52,10 +52,10 @@
     <meta property="og:url" content="http://demos.creative-tim.com/now-ui-dashboard-pro/examples/dashboard.html"/>
     <meta property="og:image" content="{{ asset('assets/img/now-logo.png') }}"/>
     <meta property="og:description"
-          content="Ranwala  - App Dashboard by Arimac Digital"/>
-    <meta property="og:site_name" content="Ranwala App"/>
+          content=" Online Shopping"/>
+    <meta property="og:site_name" content=" Online Shopping"/>
     <title>
-        Ranwala - App Dashboard by Arimac Digital
+        Online Shopping
     </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
           name='viewport'/>

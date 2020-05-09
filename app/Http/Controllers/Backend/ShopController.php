@@ -74,7 +74,6 @@ class ShopController extends Controller
     {
         if (Auth::user()->user_type == 'super_admin') {
             $shop = Shop::find($id);
-            dd(Auth::user()->user_type);
             return view('backend.pages.shops.edit', ["shop" => $shop]);
         } else {
             return view('backend.pages.shops.index')->with(session()->flash('error', 'You are not authorized to edit a shop'));

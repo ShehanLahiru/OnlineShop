@@ -9,7 +9,7 @@
           <span class="navbar-toggler-bar bar3"></span>
         </button>
       </div>
-    <a class="navbar-brand">Ranwala APP Backend</a>
+    <a class="navbar-brand">Online Shopping Backend</a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -59,9 +59,9 @@
             </p>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            {{-- <a class="dropdown-item" href="{{ route('backend.profile.edit') }}">{{ __("My profile") }}</a>
+            <a class="dropdown-item" href="{{ route('backend.profile.edit') }}">{{ __("My profile") }}</a>
             <a class="dropdown-item" href="{{ route('backend.profile.edit') }}">{{ __("Edit profile") }}</a>
-            <a class="dropdown-item" href="{{ route('backend.logout') }}" --}}
+            <a class="dropdown-item" href="{{ route('backend.logout') }}"
             onclick="event.preventDefault();
                           document.getElementById('logout-form').submit();">
               {{ __('Logout') }}
