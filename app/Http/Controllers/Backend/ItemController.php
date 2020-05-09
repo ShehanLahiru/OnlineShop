@@ -40,7 +40,7 @@ class ItemController extends Controller
         if ($user->user_type == ('super_admin')) {
             $shops = Shop::all();
         } else {
-            $shops = $user->shop_id;
+            $shops = Shop::where('id',$user->shop_id)->get();
         }
         return view('backend.pages.items.create', ["categories" => $categories, "shops" => $shops,]);
     }
@@ -101,7 +101,7 @@ class ItemController extends Controller
         if ($user->user_type == ('super_admin')) {
             $shops = Shop::all();
         } else {
-            $shops = $user->shop_id;
+            $shops = Shop::where('id',$user->shop_id)->get();
         }
         return view('backend.pages.items.edit', ["categories" => $categories, "shops" => $shops, "item" => $item]);
     }

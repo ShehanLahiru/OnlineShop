@@ -7,6 +7,7 @@ use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\BackendRequest\CreateShopRequest;
 
 class ShopController extends Controller
@@ -24,11 +25,11 @@ class ShopController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->user_type = 'super_admin') {
+        if (Auth::user()->user_type =='super_admin') {
 
             return view('backend.pages.shops.create');
         } else {
-            return view('backend.pages.shops.index')->with(session()->flash('error', 'You are not authorized to create a shop'));
+            return Redirect::route('backend.shops.index')->with(session()->flash('error', 'You are not authorized to create a shop'));
         }
     }
 
@@ -76,7 +77,7 @@ class ShopController extends Controller
             $shop = Shop::find($id);
             return view('backend.pages.shops.edit', ["shop" => $shop]);
         } else {
-            return view('backend.pages.shops.index')->with(session()->flash('error', 'You are not authorized to edit a shop'));
+            return Redirect::route('backend.shops.index')->with(session()->flash('error', 'You are not authorized to edit a shop'));
         }
     }
 
@@ -118,7 +119,7 @@ class ShopController extends Controller
                 return redirect()->route('backend.shops.index')->with(session()->flash('error', 'Something went wrong!'));
             };
         } else {
-            return view('backend.pages.shops.index')->with(session()->flash('error', 'You are not authorized to edit a shop'));
+            return Redirect::route('backend.shops.index')->with(session()->flash('error', 'You are not authorized to delete a shop'));
         }
     }
 }

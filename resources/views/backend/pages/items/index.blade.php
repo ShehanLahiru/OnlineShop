@@ -12,7 +12,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title"> Hand Work List</h4>
+                        <h4 class="card-title"> Item List</h4>
                         <div class="pull-right">
                             <a href="{{ route('backend.items.create') }}">
                                 <button class="btn btn-primary">Create</button>
