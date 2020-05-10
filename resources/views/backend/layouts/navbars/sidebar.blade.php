@@ -17,19 +17,19 @@
             </li>
             <li class="@if ($activePage == 'items') active @endif">
                 <a href="{{ route('backend.items.index') }}">
-                    <i class="fas fa-music"></i>
+                    <i class="fas fa-spray-can"></i>
                     <p>{{ __('Items') }}</p>
                 </a>
             </li>
             <li class="@if ($activePage == 'shops') active @endif">
                 <a href="{{ route('backend.shops.index') }}">
-                    <i class="fas fa-music"></i>
+                    <i class="fas fa-home"></i>
                     <p>{{ __('Shops') }}</p>
                 </a>
             </li>
             <li class="@if ($activePage == 'categories') active @endif">
                 <a href="{{ route('backend.categories.index') }}">
-                    <i class="fas fa-music"></i>
+                    <i class="fas fa-tags"></i>
                     <p>{{ __('Categories') }}</p>
                 </a>
             </li>

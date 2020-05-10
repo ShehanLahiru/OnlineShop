@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="col-md-4 ml-auto mr-auto">
-            <form role="form" method="POST" action="{{ route('backend.login') }}">
+            <form role="form" method="POST" action="{{ route('backend.login.submit') }}">
                 @csrf
             <div class="card card-login card-plain">
                 <div class="card-header ">

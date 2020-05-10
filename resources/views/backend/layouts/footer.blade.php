@@ -5,7 +5,7 @@
       <script>
         document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
       </script>, {{__(" Designed by")}}
-      <a href="https://arimaclanka.com" target="_blank">Arimac</a>
+      <a href="" target="_blank">Online Shoping</a>
     </div>
   </div>
 </footer>

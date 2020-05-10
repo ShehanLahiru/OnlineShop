@@ -26,28 +26,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <!-- Extra details for Live View on GitHub Pages -->
     <!-- Canonical SEO -->
-    <link rel="canonical" href="https://arimaclanka.com"/>
+    <link rel="canonical" href=""/>
 
 
     <!--  Social tags      -->
-    <meta name="keywords" content="ranwala, arimac, dashboard">
-    <meta name="description" content="Ranwala App">
+    <meta name="keywords" content="">
+    <meta name="description" content="Online Shop">
     <meta itemprop="image" content="{{ asset('assets/img/now-logo.png') }}">
 
 
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="product">
-    <meta name="twitter:site" content="@teamarimac">
-    <meta name="twitter:title" content="[Ranwala - App Dashboard] by Arimac Digital">
+    <meta name="twitter:site" content=">
+    <meta name="twitter:title" content="">
 
-    <meta name="twitter:description" content="Arimac Digital">
-    <meta name="twitter:creator" content="@teamarimac">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:creator" content="">
     <meta name="twitter:image" content="{{ asset('assets/img/now-logo.png') }}">
 
 
     <!-- Open Graph data -->
     <meta property="fb:app_id" content="">
-    <meta property="og:title" content="Ranwala - App Dashboard by Arimac Digital"/>
+    <meta property="og:title" content=""/>
     <meta property="og:type" content="article"/>
     <meta property="og:url" content="http://demos.creative-tim.com/now-ui-dashboard-pro/examples/dashboard.html"/>
     <meta property="og:image" content="{{ asset('assets/img/now-logo.png') }}"/>
