@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\APIController;
+namespace App\Http\Controllers\API;
 use App\Item;
 use App\CategoryType;
 use App\Helpers\APIHelper;
