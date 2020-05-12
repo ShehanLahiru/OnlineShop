@@ -41,6 +41,10 @@ class User extends Authenticatable implements JWTSubject
 
         return $this->belongsTo('App\Shop', 'shop_id', 'id');
     }
+    public function order(){
+
+        return $this->hasMany('App\Order','user_id','id');
+    }
 
     public function getJWTIdentifier()
     {

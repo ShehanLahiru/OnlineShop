@@ -23,7 +23,12 @@ class Item extends Model
     }
     public function quantityType()
     {
-        return $this->has('App\QuantityType', 'quantity_type_id', 'id');
+        return $this->hasOne('App\QuantityType', 'quantity_type_id', 'id');
+
+    }
+    public function order()
+    {
+        return $this->belongTo('App\Order', 'item_id', 'id');
 
     }
     public function getImageUrlAttribute($value)
