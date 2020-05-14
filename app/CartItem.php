@@ -10,4 +10,11 @@ class CartItem extends Model
 
         return $this->belongsTo('App\Order','order_id','id');
     }
+
+    public function item(){
+
+        return $this->belongsTo('App\Item','item_id','id');
+    }
+
+
 }

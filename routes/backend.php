@@ -21,10 +21,18 @@ Route::post('logout', 'Backend\Auth\LoginController@logout')->name('backend.logo
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/home', 'Backend\HomeController@home')->name('backend.home');
+    
     Route::resource('shops', 'Backend\ShopController', ['as' => 'backend']);
     Route::resource('categories', 'Backend\CategoryController', ['as' => 'backend']);
     Route::resource('items', 'Backend\ItemController', ['as' => 'backend']);
 
+    //order
+    Route::resource('orders', 'Backend\OrderController', ['as' => 'backend']);
+    Route::post('/changeOrderStatus/{id}', 'Backend\OrderController@changeOrderStatus')->name('backend.changeOrderStatus');
+    Route::post('/changeStatus/{id}', 'Backend\OrderController@changeStatus')->name('backend.changeStatus');
+    Route::post('/removeItem/{id}', 'Backend\OrderController@removeItem')->name('backend.removeItem');
+
+    //users
     Route::resource('users', 'Backend\UserController', ['except' => ['show'], 'as' => 'backend']);
 	Route::get('profile', ['as' => 'backend.profile.edit', 'uses' => 'Backend\ProfileController@edit']);
 	Route::put('profile', ['as' => 'backend.profile.update', 'uses' => 'Backend\ProfileController@update']);
