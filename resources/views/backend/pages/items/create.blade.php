@@ -56,15 +56,6 @@
                             <div class="row">
                                 <div class="col-md-7 pr-1">
                                     <div class="form-group">
-                                        <label for="quantity">{{__(" Quantity")}}</label>
-                                        <input type="text" name="quantity" class="form-control" value="{{ old('quantity') }}">
-                                        @include('backend.alerts.feedback', ['field' => 'quantity'])
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-7 pr-1">
-                                    <div class="form-group">
                                         <label for="discount">{{__(" Discount Percentage")}}</label>
                                         <input type="text" name="discount" class="form-control" value="{{ old('discount') }}">
                                         @include('backend.alerts.feedback', ['field' => 'discount'])
@@ -106,6 +97,42 @@
                                             <option value="loose">loose</option>
                                         </select>
                                         @include('backend.alerts.feedback', ['field' => 'shop_id'])
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-7 pr-1">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="quantityPiece">{{__(" If Quantity type is Piece ")}}</label>
+                                                <input type="text" size="50"  name="quantityPiece" class="form-control"
+                                                    value="{{ old('quantityPiece') }}">
+                                                @include('backend.alerts.feedback', ['field' => 'quantitypiece'])
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p>If Quantity type is loose</p>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="quantityKg">{{__(" Kg ")}}</label>
+                                                        <input type="text" name="quantityKg" class="form-control"
+                                                            value="{{ old('quantityKg') }}">
+                                                        @include('backend.alerts.feedback', ['field' => 'quantityKg'])
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="quantityg">{{__(" g ")}}</label>
+                                                        <input type="text" name="quantityg" class="form-control"
+                                                            value="{{ old('quantityg') }}">
+                                                        @include('backend.alerts.feedback', ['field' => 'quantityg'])
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

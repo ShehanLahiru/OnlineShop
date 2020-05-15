@@ -2,14 +2,14 @@
 
 namespace App\Helpers;
 
-use App\User;
 use App\Item;
 use App\Shop;
-use App\ItemCategory;
+use App\User;
 use App\Order;
+use App\ItemCategory;
 use App\QuantityType;
-use Image;
 use http\Env\Request;
+use Image;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
@@ -101,5 +101,33 @@ class APIHelper
         }
         return null;
     }
+
+    public static function getWeight($kg,$g){
+
+        $quantity = ($kg * 1000) + $g;
+        return $quantity;
+    }
+    public static function getKgFromWeight($kg){
+
+        $quantity = (int)($kg/1000);
+        return $quantity;
+    }
+    public static function getGramFromWeight($g){
+
+        $quantity = ($g % 1000);
+        return $quantity;
+    }
+
+    public static function getQuantity($qty){
+
+        $kg = APIHelper::getKgFromWeight($qty);
+        $g =  APIHelper::getGramFromWeight($qty);
+        $quantity = $kg."Kg"." ".$g."g";
+
+        return $quantity;
+    }
+
+
+
 
 }

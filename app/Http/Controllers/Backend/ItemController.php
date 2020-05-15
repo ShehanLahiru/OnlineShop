@@ -21,8 +21,18 @@ class ItemController extends Controller
 
         if ($user->user_type == ('super_admin')) {
             $items = Item::all();
+            foreach($items as $item){
+                if($item->quantity_type == 'loose'){
+                    $item->quantity = APIHelper::getQuantity($item->quantity);
+                }
+            }
         } else {
             $items = Item::all()->where('shop_id', $user->shop_id);
+            foreach($items as $item){
+                if($item->quantity == "loose"){
+                    $item->quantity = APIHelper::getQuantity($item->quantity);
+                }
+            }
         }
         return view('backend.pages.items.index', ["items" => $items,]);
     }
@@ -59,14 +69,20 @@ class ItemController extends Controller
         $item->category_id = $request->input("category_id");
         $item->shop_id = $request->input("shop_id");
         $item->price = $request->input("price");
-        $item->quantity = $request->input("quantity");
         $item->quantity_type = $request->input("quantity_type");
+        if($item->quantity_type == 'piece'){
+            $item->quantity = $request->input("quantityPiece");
+        }
+        else{
+            $item->quantity = APIHelper::getWeight($request->input("quantityKg"),$request->input("quantityg"));
+        }
         $item->discount = $request->input("discount");
         if ($request->hasFile('image')) {
 
             $url = APIHelper::uploadFileToStorage($request->file('image'), 'public/common_media');
             $item->image_url = $url;
         }
+
         $result = $item->save();
         if ($result) {
             return redirect()->route('backend.items.index')->with(session()->flash('success', 'item Created!'));
@@ -97,6 +113,14 @@ class ItemController extends Controller
         $item = Item::find($id);
         $user = Auth::user();
         $categories = ItemCategory::all();
+        if($item->quantity_type =="piece"){
+            $item->quantityPiece = $item->quantity;
+        }
+        else{
+            $item->quantityKg = APIHelper::getKgFromWeight($item->quantity);
+            $item->quantityg = APIHelper::getGramFromWeight($item->quantity);
+        }
+
 
         if ($user->user_type == ('super_admin')) {
             $shops = Shop::all();
@@ -122,8 +146,13 @@ class ItemController extends Controller
         $item->category_id = $request->input("category_id");
         $item->shop_id = $request->input("shop_id");
         $item->price = $request->input("price");
-        $item->quantity = $request->input("quantity");
         $item->quantity_type = $request->input("quantity_type");
+        if($item->quantity_type == "piece"){
+            $item->quantity = $request->input("quantityPiece");
+        }
+        else{
+            $item->quantity = APIHelper::getWeight($request->input("quantityKg"),$request->input("quantityg"));
+        }
         $item->discount = $request->input("discount");
         if ($request->hasFile('image')) {
 

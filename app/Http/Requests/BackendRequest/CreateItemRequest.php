@@ -25,7 +25,6 @@ class CreateItemRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'quantity' => 'required',
             'price' => 'required',
             'category_id' => 'required',
             'quantity_type' => 'required',
