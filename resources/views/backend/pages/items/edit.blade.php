@@ -96,6 +96,7 @@
                                         <select class="form-control" id="quantity_type" name="quantity_type" >
                                             <option {{$item->quantity_type == 'piece' ? 'selected' : ''}}  value="piece">piece</option>
                                             <option {{$item->quantity_type == 'loose' ? 'selected' : ''}}  value="loose">loose</option>
+                                            <option {{$item->quantity_type == 'liquide' ? 'selected' : ''}}  value="liquide">liquide</option>
                                         </select>
                                         @include('backend.alerts.feedback', ['field' => 'shop_id'])
                                     </div>
@@ -129,6 +130,27 @@
                                                         <input type="text" name="quantityg" class="form-control"
                                                         value="{{ old('discount',$item->quantityg) }}">
                                                         @include('backend.alerts.feedback', ['field' => 'quantityg'])
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <p>If Quantity type is liquide</p>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="quantityL">{{__(" L ")}}</label>
+                                                        <input type="text" name="quantityL" class="form-control"
+                                                        value="{{ old('discount',$item->quantityL) }}">
+                                                        @include('backend.alerts.feedback', ['field' => 'quantityL'])
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="quantityMl">{{__(" ML ")}}</label>
+                                                        <input type="text" name="quantityMl" class="form-control"
+                                                        value="{{ old('discount',$item->quantityMl) }}">
+                                                        @include('backend.alerts.feedback', ['field' => 'quantityMl'])
                                                     </div>
                                                 </div>
                                             </div>

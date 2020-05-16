@@ -38,6 +38,10 @@ class OrderController extends Controller
                 $cartItem->quantity =  APIHelper::getQuantity( $cartItem->quantity);
 
             }
+            elseif($cartItem->item->quantity_type == "liquide"){
+                $cartItem->amount = ($cartItem->price - $cartItem->discount) * ($cartItem->quantity/1000);
+                $cartItem->quantity =  APIHelper::getVolumeQuantity( $cartItem->quantity);
+            }
             else{
                 $cartItem->amount = ($cartItem->price - $cartItem->discount) * ($cartItem->quantity);
             }

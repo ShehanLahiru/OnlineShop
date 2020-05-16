@@ -25,12 +25,15 @@ class ItemController extends Controller
                 if($item->quantity_type == 'loose'){
                     $item->quantity = APIHelper::getQuantity($item->quantity);
                 }
+                elseif($item->quantity_type == 'liquide'){
+                    $item->quantity = APIHelper::getVolumeQuantity($item->quantity);
+                }
             }
         } else {
             $items = Item::all()->where('shop_id', $user->shop_id);
             foreach($items as $item){
                 if($item->quantity == "loose"){
-                    $item->quantity = APIHelper::getQuantity($item->quantity);
+                    $item->quantity = APIHelper::getVolumeQuantity($item->quantity);
                 }
             }
         }
@@ -73,8 +76,11 @@ class ItemController extends Controller
         if($item->quantity_type == 'piece'){
             $item->quantity = $request->input("quantityPiece");
         }
-        else{
+        elseif($item->quantity_type == 'loose'){
             $item->quantity = APIHelper::getWeight($request->input("quantityKg"),$request->input("quantityg"));
+        }
+        else{
+            $item->quantity = APIHelper::getVolume($request->input("quantityL"),$request->input("quantityMl"));
         }
         $item->discount = $request->input("discount");
         if ($request->hasFile('image')) {
@@ -116,9 +122,13 @@ class ItemController extends Controller
         if($item->quantity_type =="piece"){
             $item->quantityPiece = $item->quantity;
         }
-        else{
+        elseif($item->quantity_type =="loose"){
             $item->quantityKg = APIHelper::getKgFromWeight($item->quantity);
             $item->quantityg = APIHelper::getGramFromWeight($item->quantity);
+        }
+        else{
+            $item->quantityL = APIHelper::getLFromVolume($item->quantity);
+            $item->quantityMl = APIHelper::getMlFromVolume($item->quantity);
         }
 
 
@@ -150,8 +160,11 @@ class ItemController extends Controller
         if($item->quantity_type == "piece"){
             $item->quantity = $request->input("quantityPiece");
         }
-        else{
+        elseif($item->quantity_type == 'loose'){
             $item->quantity = APIHelper::getWeight($request->input("quantityKg"),$request->input("quantityg"));
+        }
+        else{
+            $item->quantity = APIHelper::getVolume($request->input("quantityL"),$request->input("quantityMl"));
         }
         $item->discount = $request->input("discount");
         if ($request->hasFile('image')) {

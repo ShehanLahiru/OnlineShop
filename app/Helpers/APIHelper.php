@@ -126,6 +126,29 @@ class APIHelper
 
         return $quantity;
     }
+    public static function getVolume($L,$Ml){
+
+        $quantity = ($L * 1000) + $Ml;
+        return $quantity;
+    }
+    public static function getLFromVolume($l){
+
+        $quantity = (int)($l/1000);
+        return $quantity;
+    }
+    public static function getMlFromVolume($ml){
+
+        $quantity = ($ml % 1000);
+        return $quantity;
+    }
+    public static function getVolumeQuantity($qty){
+
+        $l = APIHelper::getLFromVolume($qty);
+        $ml =  APIHelper::getMlFromVolume($qty);
+        $quantity = $l."L"." ".$ml."Ml";
+
+        return $quantity;
+    }
 
 
 

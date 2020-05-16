@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
     public function addToOrder(Request $request)
     {
-        try {
+         try {
 
             $order = new Order();
             $total_amount = 0;
@@ -26,8 +26,12 @@ class OrderController extends Controller
                     $cart->quantity = $cart_item['quantity'];
                     $total_amount = ($item->price - $item->discount)*($cart->quantity) + $total_amount;
                 }
-                else{
+                elseif($item->quantity_type == 'loose'){
                     $cart->quantity = APIHelper::getWeight($cart_item["quantityKg"],$cart_item["quantityg"]);
+                    $total_amount = ($item->price - $item->discount)*(($cart->quantity)/1000) + $total_amount;
+                }
+                else{
+                    $cart->quantity = APIHelper::getVolume($cart_item["quantityL"],$cart_item["quantityMl"]);
                     $total_amount = ($item->price - $item->discount)*(($cart->quantity)/1000) + $total_amount;
                 }
 
@@ -98,6 +102,9 @@ class OrderController extends Controller
                 $item = Item::find($cartItem->item_id);
                 if($item->quantity_type == 'loose'){
                     $cartItem->quantity = APIHelper::getQuantity($cartItem->quantity);
+                }
+                elseif($item->quantity_type == 'liquide'){
+                    $cartItem->quantity = APIHelper::getVolumeQuantity($cartItem->quantity);
                 }
                 $cartItem->name = $item->name;
                 $cartItem->description = $item->description;
