@@ -31,8 +31,19 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::where('id',$id)->with('user')->first();
-        $cartItem = CartItem::where('order_id',$id)->with('item')->get();
-        return view('backend.pages.orders.show', ["order" => $order,"cartItem" => $cartItem]);
+        $cartItems = CartItem::where('order_id',$id)->with('item')->get();
+        foreach( $cartItems as $cartItem){
+            if($cartItem->item->quantity_type == "loose"){
+                $cartItem->amount = ($cartItem->price - $cartItem->discount) * ($cartItem->quantity/1000);
+                $cartItem->quantity =  APIHelper::getQuantity( $cartItem->quantity);
+
+            }
+            else{
+                $cartItem->amount = ($cartItem->price - $cartItem->discount) * ($cartItem->quantity);
+            }
+        }
+
+        return view('backend.pages.orders.show', ["order" => $order,"cartItem" => $cartItems]);
 
     }
 

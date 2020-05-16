@@ -33,7 +33,7 @@
                                     <td>{{ $cartItem->price}}</td>
                                     <td>{{ $cartItem->quantity }}</td>
                                     <td>{{ $cartItem->discount }}</td>
-                                    <td>{{($cartItem->price - $cartItem->discount) * ($cartItem->quantity) }}</td>
+                                    <td>{{$cartItem->amount }}</td>
                                     <td>
                                         <form method="post" action="{{ route('backend.removeItem',$cartItem->id ) }}">
                                             @csrf
