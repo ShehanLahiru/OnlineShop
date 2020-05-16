@@ -65,5 +65,6 @@ b
             </div>
         </div>
     </div>
+    {{ $orders->links() }}
 </div>
 @endsection

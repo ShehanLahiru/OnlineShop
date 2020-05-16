@@ -22,9 +22,9 @@ class OrderController extends Controller
         $user = Auth::user();
 
         if ($user->user_type == ('super_admin')) {
-            $orders = Order::with('user')->orderBy('created_at','desc')->get();
+            $orders = Order::with('user')->orderBy('created_at','desc')->paginate(10);
         } else {
-            $orders = Order::where('shop_id', $user->shop_id)->orderBy('created_at','desc')->get();
+            $orders = Order::where('shop_id', $user->shop_id)->orderBy('created_at','desc')->paginate(10);
         }
         return view('backend.pages.orders.index', ["orders" => $orders,]);
     }

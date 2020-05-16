@@ -20,7 +20,7 @@ class ItemController extends Controller
         $user = Auth::user();
 
         if ($user->user_type == ('super_admin')) {
-            $items = Item::all();
+            $items = Item::paginate(10);
             foreach($items as $item){
                 if($item->quantity_type == 'loose'){
                     $item->quantity = APIHelper::getQuantity($item->quantity);
@@ -30,7 +30,7 @@ class ItemController extends Controller
                 }
             }
         } else {
-            $items = Item::all()->where('shop_id', $user->shop_id);
+            $items = Item::where('shop_id', $user->shop_id)->paginate(10);
             foreach($items as $item){
                 if($item->quantity == "loose"){
                     $item->quantity = APIHelper::getVolumeQuantity($item->quantity);

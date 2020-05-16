@@ -39,8 +39,6 @@
                                     <td>{{ $shop->contact_no }}</td>
                                     <td>{{ $shop->created_at }}</td>
                                     <td>
-                                        {{--<button class="btn btn-warning" onclick="changeStatus({{ $restaurant->id }})">Approve
-                                        / Reject</button>--}}
                                         <a href="{{ route('backend.shops.edit',$shop->id) }}">
                                             <button class="btn btn-default">Edit</button>
                                         </a>
@@ -59,5 +57,6 @@
             </div>
         </div>
     </div>
+    {{ $shops->links() }}
 </div>
 @endsection

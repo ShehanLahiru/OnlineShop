@@ -35,7 +35,7 @@
                                         <td>{{ $category->name }}</td>
                                         <td>{{ $category->created_at }}</td>
                                         <td>
-                                            {{--                                            <button class="btn btn-warning" onclick="changeStatus({{ $restaurant->id }})">Approve / Reject</button>--}}
+
                                             <a href="{{ route('backend.categories.edit',$category->id) }}">
                                                 <button class="btn btn-default">Edit</button>
                                             </a>
@@ -54,5 +54,6 @@
                 </div>
             </div>
         </div>
+        {{ $categories->links() }}
     </div>
 @endsection
