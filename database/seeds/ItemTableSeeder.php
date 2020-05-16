@@ -22,7 +22,7 @@ class ItemTableSeeder extends Seeder
                 'category_id' => 1,
                 'shop_id' => 1,
                 'price' => 100,
-                'quantity' => '10kg',
+                'quantity' => '100750',
                 'quantity_type' => 'loose',
                 'discount' => NULL,
                 'image_url' => 'ADGGHGHF456asdfre',
