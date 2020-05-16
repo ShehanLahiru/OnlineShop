@@ -57,6 +57,7 @@ class UserController extends Controller
                 } else {
                     $data = array();
                     $data['name'] = $user->name;
+                    $data['address'] = $user->address;
                     $data['token'] = $token;
                     return APIHelper::makeAPIResponse(true, "Logged in", $data, 200);
                 }
