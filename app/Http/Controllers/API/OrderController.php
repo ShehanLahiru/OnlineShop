@@ -20,27 +20,53 @@ class OrderController extends Controller
             $total_amount = 0;
             foreach($request->cart_items as $cart_item){
                 $item = Item::find($cart_item['item_id']);
-                $item->quantity = $item->quantity - $cart_item['quantity'];
-                $item->save();
+
                 $cart = new CartItem();
-                $cart->quantity = $cart_item['quantity'];
+                if($item->quantity_type == 'piece'){
+                    $cart->quantity = $cart_item['quantity'];
+                    $total_amount = ($item->price - $item->discount)*($cart->quantity) + $total_amount;
+                }
+                else{
+                    $cart->quantity = APIHelper::getWeight($cart_item["quantityKg"],$cart_item["quantityg"]);
+                    $total_amount = ($item->price - $item->discount)*(($cart->quantity)/1000) + $total_amount;
+                }
+
                 $cart->item_id = $item->id;
                 $cart->price = $item->price;
                 $cart->discount = $item->discount;
                 $cart->order_id = Order::all()->count() + 1;
                 $cart->save();
                 $order->shop_id = $item->shop_id;
-                $total_amount = ($item->price - $item->discount)*($cart->quantity) + $total_amount;
+                $item->quantity = $item->quantity - $cart->quantity ;
+                $item->save();
 
             }
             $order->user_id = Auth::user()->id;
             $order->total_amount = $total_amount;
             $order->delivery_address = $request->input('delivery_address');
             $order->status = 'pending';
-            $order->save();
-            return APIHelper::makeAPIResponse(true, "Order Added",null, 200);
+            $result = $order->save();
+            if($result){
+                return APIHelper::makeAPIResponse(true, "Order Added",null, 200);
+            }
+            else{
+                $cartItems = CartItem::where('order_id',Order::all()->count() + 1)->with('item')->get();
+                foreach($cartItems as $cartItem){
+                    $item = Item::find($cartItem->item_id);
+                    $item->quantity = $cartItem->quantity + $item->quantity;
+                    $cartItem->delete();
+                }
+
+                    return APIHelper::makeAPIResponse(false, "Something went wrong", null, 500);
+            }
 
         } catch (\Exception $e) {
+            $cartItems = CartItem::where('order_id',Order::all()->count() + 1)->with('item')->get();
+            foreach($cartItems as $cartItem){
+                $item = Item::find($cartItem->item_id);
+                $item->quantity = $cartItem->quantity + $item->quantity;
+                $cartItem->delete();
+            }
             report($e);
             return APIHelper::makeAPIResponse(false, "Service error", null, 500);
         }
@@ -51,9 +77,9 @@ class OrderController extends Controller
     {
         try {
             $user_id = Auth::user()->id;
-            $order = Order::where('shop_id',$id & 'user_id',$user_id) ->orderBy('id', 'desc')->get();
+            $orders = Order::where('shop_id',$id & 'user_id',$user_id) ->orderBy('id', 'desc')->get();
+           return APIHelper::makeAPIResponse(true, "All Orders ",$orders, 200);
 
-           return APIHelper::makeAPIResponse(true, "All Orders ",$order, 200);
        }
        catch (\Exception $e) {
            report($e);
@@ -65,7 +91,17 @@ class OrderController extends Controller
     public function getOrderById($id)
     {
         try {
-            $order = Order::find($id);
+            $order = Order::where('id',$id)->with('cart')->first();
+
+
+            foreach($order->cart as $cartItem){
+                $item = Item::find($cartItem->item_id);
+                if($item->quantity_type == 'loose'){
+                    $cartItem->quantity = APIHelper::getQuantity($cartItem->quantity);
+                }
+                $cartItem->name = $item->name;
+                $cartItem->description = $item->description;
+            }
 
            return APIHelper::makeAPIResponse(true, "Order Found",$order, 200);
        }
@@ -75,7 +111,7 @@ class OrderController extends Controller
        }
 
     }
-    public function cancelOrder($id)
+    public function cancelOrder($id) //order remove item
     {
         try {
             $order = Order::find($id);
