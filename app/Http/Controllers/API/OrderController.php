@@ -81,7 +81,7 @@ class OrderController extends Controller
     {
         try {
             $user_id = Auth::user()->id;
-            $orders = Order::where('shop_id',$id & 'user_id',$user_id) ->orderBy('id', 'desc')->get();
+            $orders = Order::where( 'user_id',$user_id)->where('shop_id',$id)->orderBy('id', 'desc')->get();
            return APIHelper::makeAPIResponse(true, "All Orders ",$orders, 200);
 
        }
