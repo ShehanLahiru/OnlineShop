@@ -13,6 +13,7 @@ use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class OrderController extends Controller
 {
@@ -92,4 +93,22 @@ class OrderController extends Controller
         }
 
     }
+    public function orderSearch(Request $request){
+        $search = $request->input('search');
+        $filter = $request->input('filter');
+        $user = Auth::user();
+        if ($user->user_type == ('super_admin')){
+           $orders = Order::orWhereHas('user', function (Builder $query) use($search) {
+               $query->where('name', 'like', '%' . strtolower($search) . '%');
+           })->where('status','like','%'  . strtolower($filter) . '%')->orderBy('created_at','desc')->paginate(10);
+
+        }
+        else{
+           $orders = Order::orWhereHas('user', function (Builder $query) use($search) {
+               $query->where('name', 'like', '%' . strtolower($search) . '%');
+           })->where('status','like','%'  . strtolower($filter) . '%')->where('shop_id',$user->shop_id)->orderBy('created_at','desc')->paginate(10);
+        }
+
+       return view('backend.pages.orders.index', ["orders" => $orders,]);
+   }
 }

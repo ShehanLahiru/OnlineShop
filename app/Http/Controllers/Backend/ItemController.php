@@ -10,6 +10,7 @@ use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 use App\Http\Requests\BackendRequest\CreateItemRequest;
 
 
@@ -194,5 +195,31 @@ class ItemController extends Controller
         } else {
             return redirect()->route('backend.items.index')->with(session()->flash('error', 'Something went wrong!'));
         }
+    }
+    public function itemSearch(Request $request){
+         $search = $request->input('search');
+         $user = Auth::user();
+         if ($user->user_type == ('super_admin')){
+            $items = Item::orWhereHas('itemCategory', function (Builder $query) use($search) {
+                $query->where('name', 'like', '%' . strtolower($search) . '%');
+            })->orWhere('name', 'like', '%' . strtolower($search) . '%')->paginate(10);
+
+         }
+         else{
+            $items = Item::where('shop_id',$user->shop_id)->orWhereHas('itemCategory', function (Builder $query) use($search) {
+                $query->where('name', 'like', '%' . strtolower($search) . '%');
+            })->orWhere('name', 'like', '%' . strtolower($search) . '%')->paginate(10);
+         }
+
+
+        foreach($items as $item){
+            if($item->quantity_type == 'loose'){
+                $item->quantity = APIHelper::getQuantity($item->quantity);
+            }
+            elseif($item->quantity_type == 'liquide'){
+                $item->quantity = APIHelper::getVolumeQuantity($item->quantity);
+            }
+        }
+        return view('backend.pages.items.index', ["items" => $items,]);
     }
 }
