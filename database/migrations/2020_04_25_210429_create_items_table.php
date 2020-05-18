@@ -17,12 +17,12 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('description')->nullable();
-            $table->bigInteger('category_id')->nullable();
-            $table->bigInteger('shop_id')->nullable();
             $table->decimal('price')->nullable();
             $table->string('quantity')->nullable();
-            $table->string('quantity_type')->nullable();
             $table->decimal('discount',4)->nullable();
+            $table->bigInteger('category_id')->nullable();
+            $table->bigInteger('quantity_type_id')->nullable();
+            $table->bigInteger('shop_id')->nullable();
             $table->string('image_url')->nullable();
             $table->timestamps();
         });

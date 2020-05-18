@@ -33,6 +33,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('items', 'Backend\ItemController', ['as' => 'backend']);
     Route::post('/itemSearch', 'Backend\ItemController@itemSearch')->name('backend.itemSearch');
 
+    Route::resource('quantityTypes', 'Backend\QuantityTypeController', ['as' => 'backend']);
+
+
+
     //order
     Route::resource('orders', 'Backend\OrderController', ['as' => 'backend']);
     Route::post('/changeOrderStatus/{id}', 'Backend\OrderController@changeOrderStatus')->name('backend.changeOrderStatus');

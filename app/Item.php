@@ -23,7 +23,7 @@ class Item extends Model
     }
     public function quantityType()
     {
-        return $this->hasOne('App\QuantityType', 'quantity_type_id', 'id');
+        return $this->belongsTo('App\QuantityType', 'quantity_type_id', 'id');
 
     }
     public function order()

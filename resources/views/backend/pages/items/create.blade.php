@@ -93,11 +93,11 @@
                                     <div class="form-group">
                                         <label for="quantity_type">{{__(" Quantity Type")}}</label>
                                         <select class="form-control" id="quantity_type" name="quantity_type">
-                                            <option value="piece">piece</option>
-                                            <option value="loose">loose</option>
-                                            <option value="liquide">liquide</option>
+                                            @foreach($quantityTypes as $quantityType)
+                                                <option value="{{$quantityType->id}}">{{$quantityType->name}}</option>
+                                            @endforeach
                                         </select>
-                                        @include('backend.alerts.feedback', ['field' => 'shop_id'])
+                                        @include('backend.alerts.feedback', ['field' => 'quantity_type'])
                                     </div>
                                 </div>
                             </div>

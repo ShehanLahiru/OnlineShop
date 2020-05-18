@@ -1,7 +1,7 @@
 @extends('backend.layouts.app', [
-    'namePage' => 'categories',
+    'namePage' => 'quantityTypes',
     'class' => 'sidebar-mini',
-    'activePage' => 'categories',
+    'activePage' => 'quantityTypes',
   ])
 
 @section('content')
@@ -12,9 +12,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title"> Category List</h4>
+                        <h4 class="card-title"> Quantity Types List</h4>
                         <div class="pull-right">
-                            <a href="{{ route('backend.categories.create') }}">
+                            <a href="{{ route('backend.quantityTypes.create') }}">
                                 <button class="btn btn-primary">Create</button>
                             </a>
                         </div>
@@ -23,23 +23,25 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class=" text-primary">
-                                <th>ID</th>
                                 <th>Name</>
+                                <th>Unit1</>
+                                <th>Unit2</>
                                 <th>Created At</th>
                                 <th>Action</th>
                                 </thead>
                                 <tbody>
-                                @foreach($categories as $category)
+                                @foreach($quantityTypes as $quantityType)
                                     <tr>
-                                        <td>{{ $category->id }}</td>
-                                        <td>{{ $category->name }}</td>
-                                        <td>{{ $category->created_at }}</td>
+                                        <td>{{ $quantityType->name }}</td>
+                                        <td>{{ $quantityType->unit1 }}</td>
+                                        <td>{{ $quantityType->unit2 }}</td>
+                                        <td>{{ $quantityType->created_at }}</td>
                                         <td>
 
-                                            <a href="{{ route('backend.categories.edit',$category->id) }}">
+                                            <a href="{{ route('backend.quantityTypes.edit',$quantityType->id) }}">
                                                 <button class="btn btn-default">Edit</button>
                                             </a>
-                                            <form method="post" action="{{ route('backend.categories.destroy',$category->id) }}">
+                                            <form method="post" action="{{ route('backend.quantityTypes.destroy',$quantityType->id) }}">
                                                 @csrf
                                                 @method('delete')
                                                 <button class="btn btn-danger" type="submit">Delete</button>
@@ -54,6 +56,6 @@
                 </div>
             </div>
         </div>
-        {{ $categories->links() }}
+        {{ $quantityTypes->links() }}
     </div>
 @endsection

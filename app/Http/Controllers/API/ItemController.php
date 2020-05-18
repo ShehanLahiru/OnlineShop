@@ -12,7 +12,7 @@ class ItemController extends Controller
     public function getAllItem($id)
     {
        try {
-             $item = Item::where('shop_id',$id)->get();
+             $item = Item::where('shop_id',$id)->with('quantityType:id,name,unit1,unit2')->get();
 
             return APIHelper::makeAPIResponse(true, "All Items",$item, 200);
         }
@@ -25,7 +25,7 @@ class ItemController extends Controller
     public function getItemById($id)
     {
         try {
-             $item = Item::with('itemCategory:id,name')->find($id);
+             $item = Item::with('itemCategory:id,name','quantityType:id,name,unit1,unit2')->find($id);
 
             return APIHelper::makeAPIResponse(true, "Item Found",$item, 200);
         }

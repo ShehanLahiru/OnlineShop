@@ -94,9 +94,9 @@
                                     <div class="form-group">
                                         <label for="quantity_type">{{__(" Quantity")}}</label>
                                         <select class="form-control" id="quantity_type" name="quantity_type" >
-                                            <option {{$item->quantity_type == 'piece' ? 'selected' : ''}}  value="piece">piece</option>
-                                            <option {{$item->quantity_type == 'loose' ? 'selected' : ''}}  value="loose">loose</option>
-                                            <option {{$item->quantity_type == 'liquide' ? 'selected' : ''}}  value="liquide">liquide</option>
+                                            @foreach($quantityTypes as $quantityType)
+                                             <option value="{{$quantityType->id}}"{{$quantityType->id==$item->quantity_type_id?"selected":""}}>{{$quantityType->name}}</option>
+                                            @endforeach
                                         </select>
                                         @include('backend.alerts.feedback', ['field' => 'shop_id'])
                                     </div>

@@ -19,14 +19,14 @@ class OrderController extends Controller
             $order = new Order();
             $total_amount = 0;
             foreach($request->cart_items as $cart_item){
-                $item = Item::find($cart_item['item_id']);
+                $item = Item::with('quantityType')->find($cart_item['item_id']);
 
                 $cart = new CartItem();
-                if($item->quantity_type == 'piece'){
+                if($item->quantityType->name == 'piece'){
                     $cart->quantity = $cart_item['quantity'];
                     $total_amount = ($item->price - $item->discount)*($cart->quantity) + $total_amount;
                 }
-                elseif($item->quantity_type == 'loose'){
+                elseif($item->quantityType->name == 'loose'){
                     $cart->quantity = APIHelper::getWeight($cart_item["quantityKg"],$cart_item["quantityg"]);
                     $total_amount = ($item->price - $item->discount)*(($cart->quantity)/1000) + $total_amount;
                 }
@@ -99,15 +99,16 @@ class OrderController extends Controller
 
 
             foreach($order->cart as $cartItem){
-                $item = Item::find($cartItem->item_id);
-                if($item->quantity_type == 'loose'){
+                $item = Item::with('quantityType')->find($cartItem->item_id);
+                if($item->quantityType->name == 'loose'){
                     $cartItem->quantity = APIHelper::getQuantity($cartItem->quantity);
                 }
-                elseif($item->quantity_type == 'liquide'){
+                elseif($item->quantityType->name == 'liquide'){
                     $cartItem->quantity = APIHelper::getVolumeQuantity($cartItem->quantity);
                 }
                 $cartItem->name = $item->name;
                 $cartItem->description = $item->description;
+                $cartItem->image_url = $item->image_url;
             }
 
            return APIHelper::makeAPIResponse(true, "Order Found",$order, 200);

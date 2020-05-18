@@ -6,6 +6,7 @@ use App\Item;
 use App\Shop;
 use App\Category;
 use App\ItemCategory;
+use App\QuantityType;
 use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,19 +22,22 @@ class ItemController extends Controller
         $user = Auth::user();
 
         if ($user->user_type == ('super_admin')) {
-            $items = Item::paginate(10);
+            $items = Item::with('quantityType')->paginate(10);
             foreach($items as $item){
-                if($item->quantity_type == 'loose'){
+                if($item->quantityType->name == 'loose'){
                     $item->quantity = APIHelper::getQuantity($item->quantity);
                 }
-                elseif($item->quantity_type == 'liquide'){
+                elseif($item->quantityType->name == 'liquide'){
                     $item->quantity = APIHelper::getVolumeQuantity($item->quantity);
                 }
             }
         } else {
-            $items = Item::where('shop_id', $user->shop_id)->paginate(10);
+            $items = Item::where('shop_id', $user->shop_id)->with('quantityType')->paginate(10);
             foreach($items as $item){
-                if($item->quantity == "loose"){
+                if($item->quantityType->name == 'loose'){
+                    $item->quantity = APIHelper::getQuantity($item->quantity);
+                }
+                elseif($item->quantityType->name == 'liquide'){
                     $item->quantity = APIHelper::getVolumeQuantity($item->quantity);
                 }
             }
@@ -50,13 +54,14 @@ class ItemController extends Controller
     {
         $user = Auth::user();
         $categories = ItemCategory::all();
+        $quantityTypes = QuantityType::all();
 
         if ($user->user_type == ('super_admin')) {
             $shops = Shop::all();
         } else {
             $shops = Shop::where('id',$user->shop_id)->get();
         }
-        return view('backend.pages.items.create', ["categories" => $categories, "shops" => $shops,]);
+        return view('backend.pages.items.create', ["categories" => $categories, "shops" => $shops,"quantityTypes" => $quantityTypes]);
     }
 
     /**
@@ -73,11 +78,12 @@ class ItemController extends Controller
         $item->category_id = $request->input("category_id");
         $item->shop_id = $request->input("shop_id");
         $item->price = $request->input("price");
-        $item->quantity_type = $request->input("quantity_type");
-        if($item->quantity_type == 'piece'){
+        $item->quantity_type_id = $request->input("quantity_type");
+        $quantity_type = QuantityType::find($item->quantity_type_id);
+        if($quantity_type->name == "piece"){
             $item->quantity = $request->input("quantityPiece");
         }
-        elseif($item->quantity_type == 'loose'){
+        elseif($quantity_type->name == 'loose'){
             $item->quantity = APIHelper::getWeight($request->input("quantityKg"),$request->input("quantityg"));
         }
         else{
@@ -117,17 +123,18 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        $item = Item::find($id);
+        $item = Item::with('quantityType')->find($id);
         $user = Auth::user();
         $categories = ItemCategory::all();
-        if($item->quantity_type =="piece"){
+        $quantityTypes = QuantityType::all();
+        if($item->quantityType->name =="piece"){
             $item->quantityPiece = $item->quantity;
         }
-        elseif($item->quantity_type =="loose"){
+        elseif($item->quantityType->name =="loose"){
             $item->quantityKg = APIHelper::getKgFromWeight($item->quantity);
             $item->quantityg = APIHelper::getGramFromWeight($item->quantity);
         }
-        else{
+        else{   
             $item->quantityL = APIHelper::getLFromVolume($item->quantity);
             $item->quantityMl = APIHelper::getMlFromVolume($item->quantity);
         }
@@ -138,7 +145,7 @@ class ItemController extends Controller
         } else {
             $shops = Shop::where('id',$user->shop_id)->get();
         }
-        return view('backend.pages.items.edit', ["categories" => $categories, "shops" => $shops, "item" => $item]);
+        return view('backend.pages.items.edit', ["categories" => $categories, "shops" => $shops, "item" => $item, "quantityTypes" => $quantityTypes]);
     }
 
 
@@ -157,11 +164,12 @@ class ItemController extends Controller
         $item->category_id = $request->input("category_id");
         $item->shop_id = $request->input("shop_id");
         $item->price = $request->input("price");
-        $item->quantity_type = $request->input("quantity_type");
-        if($item->quantity_type == "piece"){
+        $item->quantity_type_id = $request->input("quantity_type");
+        $quantity_type = QuantityType::find($item->quantity_type_id);
+        if($quantity_type->name == "piece"){
             $item->quantity = $request->input("quantityPiece");
         }
-        elseif($item->quantity_type == 'loose'){
+        elseif($quantity_type->name == 'loose'){
             $item->quantity = APIHelper::getWeight($request->input("quantityKg"),$request->input("quantityg"));
         }
         else{

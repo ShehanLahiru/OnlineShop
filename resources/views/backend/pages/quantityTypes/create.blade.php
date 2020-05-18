@@ -1,7 +1,7 @@
 @extends('backend.layouts.app', [
-    'namePage' => 'categories',
+    'namePage' => 'quantityTypes',
     'class' => 'sidebar-mini',
-    'activePage' => 'categories',
+    'activePage' => 'quantityTypes',
   ])
 
 
@@ -13,15 +13,15 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="pull-right">
-                        <a href="{{ route('backend.categories.index') }}">
+                        <a href="{{ route('backend.quantityTypes.index') }}">
                             <button class="btn btn-dark" style="margin-right: 15px;">Back</button>
                         </a>
                     </div>
                     <div class="card-header">
-                        <h4 class="card-title"> Create category</h4>
+                        <h4 class="card-title"> Create Quantity Type</h4>
                     </div>
                     <div class="card-body">
-                        <form id="category_create" method="post" action="{{ route('backend.categories.store') }}" enctype="multipart/form-data">
+                        <form id="category_create" method="post" action="{{ route('backend.quantityTypes.store') }}" enctype="multipart/form-data">
                             @csrf
                             @include('backend.alerts.success')
                             <div class="row">
@@ -30,6 +30,20 @@
                                         <label for="name">{{__("Name")}}</label>
                                         <input type="text" name="name" class="form-control" value="{{ old('name') }}">
                                         @include('backend.alerts.feedback', ['field' => 'name'])
+                                    </div>
+                                </div>
+                                <div class="col-md-7 pr-1">
+                                    <div class="form-group">
+                                        <label for="unit1">{{__("unit1")}}</label>
+                                        <input type="text" name="unit1" class="form-control" value="{{ old('unit1') }}">
+                                        @include('backend.alerts.feedback', ['field' => 'unit1'])
+                                    </div>
+                                </div>
+                                <div class="col-md-7 pr-1">
+                                    <div class="form-group">
+                                        <label for="name">{{__("Unit2")}}</label>
+                                        <input type="text" name="unit2" class="form-control" value="{{ old('unit2') }}">
+                                        @include('backend.alerts.feedback', ['field' => 'unit2'])
                                     </div>
                                 </div>
                             </div>

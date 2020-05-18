@@ -39,6 +39,12 @@
                     <p>{{ __('Categories') }}</p>
                 </a>
             </li>
+            <li class="@if ($activePage == 'quantityTypes') active @endif">
+                <a href="{{ route('backend.quantityTypes.index') }}">
+                    <i class="fas fa-tags"></i>
+                    <p>{{ __('QuantityTypes') }}</p>
+                </a>
+            </li>
             <li class="@if ($activePage == 'users') active @endif">
                 <a href="{{ route('backend.users.index') }}">
                     <i class="fas fa-user"></i>

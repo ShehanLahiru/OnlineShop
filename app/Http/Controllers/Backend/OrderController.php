@@ -32,14 +32,14 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::where('id',$id)->with('user')->first();
-        $cartItems = CartItem::where('order_id',$id)->with('item')->get();
+        $cartItems = CartItem::where('order_id',$id)->with('item.quantityType')->get();
         foreach( $cartItems as $cartItem){
-            if($cartItem->item->quantity_type == "loose"){
+            if($cartItem->item->quantityType->name == "loose"){
                 $cartItem->amount = ($cartItem->price - $cartItem->discount) * ($cartItem->quantity/1000);
                 $cartItem->quantity =  APIHelper::getQuantity( $cartItem->quantity);
 
             }
-            elseif($cartItem->item->quantity_type == "liquide"){
+            elseif($cartItem->item->quantityType->name == "liquide"){
                 $cartItem->amount = ($cartItem->price - $cartItem->discount) * ($cartItem->quantity/1000);
                 $cartItem->quantity =  APIHelper::getVolumeQuantity( $cartItem->quantity);
             }
