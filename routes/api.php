@@ -53,6 +53,9 @@ Route::middleware(['jwt'])->group(function (){
         Route::get('/getOrderById/{id}', 'API\OrderController@getOrderById');
         Route::delete('/cancelOrder/{id}', 'API\OrderController@cancelOrder');
 
+        //quantityType  
+        Route::get('/getQuantityType/{id}', 'API\QuantityTypeController@getQuantityType');
+
     });
 
 });
