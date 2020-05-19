@@ -12,9 +12,17 @@ class ItemController extends Controller
     public function getAllItem($id)
     {
        try {
-             $item = Item::where('shop_id',$id)->with('quantityType:id,name,unit1,unit2')->get();
+             $items = Item::where('shop_id',$id)->with('quantityType:id,name,unit1,unit2')->get();
+             foreach($items as $item){
+                if($item->quantityType->name == 'loose'){
+                    $item->quantity = APIHelper::getQuantity($item->quantity);
+                }
+                elseif($item->quantityType->name == 'liquide'){
+                    $item->quantity = APIHelper::getVolumeQuantity($item->quantity);
+                }
+            }
 
-            return APIHelper::makeAPIResponse(true, "All Items",$item, 200);
+            return APIHelper::makeAPIResponse(true, "All Items",$items, 200);
         }
         catch (\Exception $e) {
             report($e);
@@ -26,6 +34,13 @@ class ItemController extends Controller
     {
         try {
              $item = Item::with('itemCategory:id,name','quantityType:id,name,unit1,unit2')->find($id);
+
+             if($item->quantityType->name == 'loose'){
+                $item->quantity = APIHelper::getQuantity($item->quantity);
+            }
+            elseif($item->quantityType->name == 'liquide'){
+                $item->quantity = APIHelper::getVolumeQuantity($item->quantity);
+            }
 
             return APIHelper::makeAPIResponse(true, "Item Found",$item, 200);
         }
