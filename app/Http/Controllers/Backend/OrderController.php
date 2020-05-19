@@ -70,7 +70,7 @@ class OrderController extends Controller
     public function changeStatus(Request $request,$id)
     {
         $order = Order::find($id);
-        $order->status = 'completed';
+        $order->status = $request->input('status');
         $result = $order->save();
 
         if ($result) {

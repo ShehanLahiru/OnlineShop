@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/removeItem/{id}', 'Backend\OrderController@removeItem')->name('backend.removeItem');
     Route::get('/getTodayOreder', 'Backend\OrderController@getTodayOreder')->name('backend.getTodayOreder');
     Route::post('/orderSearch', 'Backend\OrderController@orderSearch')->name('backend.orderSearch');
-   
+
 
     //users
     Route::resource('users', 'Backend\UserController', ['except' => ['show'], 'as' => 'backend']);

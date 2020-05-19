@@ -14,6 +14,37 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="title">{{__("Order")}}</h5>
+                    <form method="post" action="{{ route('backend.changeStatus',$order->id) }}">
+                        @csrf
+                        @method('post')
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <select class="form-control" id="filter" name="status">
+                                        <option {{$order->status == 'received' ? 'selected' : ''}} value="received">
+                                            Received
+                                        </option>
+                                        <option {{$order->status == 'completed' ? 'selected' : ''}} value="completed">
+                                            Completed
+                                        </option>
+                                        <option {{$order->status == 'rejected' ? 'selected' : ''}} value="rejected">
+                                            Rejected
+                                        </option>
+                                    </select>
+                                    @include('backend.alerts.feedback', ['field' => 'status'])
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-success" type="submit">Change Order Status</button>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <h5 class="title">{{__("Order") }} {{ $order->status }}</h5>
+                        {{-- <h5>Order {{ $order->status }}</h5> --}}
+                    </div>
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -68,17 +99,6 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <h4>Total Amount {{ $order->total_amount }}</h4>
-                        </div>
-                        <div class="col-sm-6">
-                            <form method="post" action="{{ route('backend.changeStatus',$order->id) }}">
-                                @csrf
-                                @method('post')
-                                @if($order->status != 'completed')
-                                <button class="btn btn-success" type="submit">Change Order Status To Completed</button>
-                                @else
-                                <h5 class="title">{{__(" Order Completed")}}</h5>
-                                @endif
-                            </form>
                         </div>
                     </div>
                     <div class="row">
