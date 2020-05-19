@@ -11,9 +11,11 @@ use App\Category;
 use App\ItemCategory;
 use App\Helpers\APIHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -111,4 +113,18 @@ class OrderController extends Controller
 
        return view('backend.pages.orders.index', ["orders" => $orders,]);
    }
+
+   public function getTodayOreder()
+    {
+
+        $user = Auth::user();
+        $date = carbon::now()->format('Y-m-d');
+
+        if ($user->user_type == ('super_admin')) {
+            $orders = Order::with('user')->where(DB::raw('DATE(`created_at`)'),$date)->orderBy('created_at','desc')->paginate(10);
+        } else {
+            $orders = Order::with('user')->where(DB::raw('DATE(`created_at`)'),$date)->where('shop_id', $user->shop_id)->orderBy('created_at','desc')->paginate(10);
+        }
+        return view('backend.pages.orders.index', ["orders" => $orders,]);
+    }
 }

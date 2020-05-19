@@ -21,6 +21,12 @@
                     <p>{{ __('Orders') }}</p>
                 </a>
             </li>
+            <li class="@if ($activePage == 'orders') active @endif">
+                <a href="{{ route('backend.getTodayOreder') }}">
+                    <i class="fas fa-user"></i>
+                    <p>{{ __('Today Orders') }}</p>
+                </a>
+            </li>
             <li class="@if ($activePage == 'items') active @endif">
                 <a href="{{ route('backend.items.index') }}">
                     <i class="fas fa-spray-can"></i>

@@ -42,7 +42,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/changeOrderStatus/{id}', 'Backend\OrderController@changeOrderStatus')->name('backend.changeOrderStatus');
     Route::post('/changeStatus/{id}', 'Backend\OrderController@changeStatus')->name('backend.changeStatus');
     Route::post('/removeItem/{id}', 'Backend\OrderController@removeItem')->name('backend.removeItem');
+    Route::get('/getTodayOreder', 'Backend\OrderController@getTodayOreder')->name('backend.getTodayOreder');
     Route::post('/orderSearch', 'Backend\OrderController@orderSearch')->name('backend.orderSearch');
+   
 
     //users
     Route::resource('users', 'Backend\UserController', ['except' => ['show'], 'as' => 'backend']);
