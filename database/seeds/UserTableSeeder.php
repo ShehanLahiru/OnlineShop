@@ -42,6 +42,20 @@ class UserTableSeeder extends Seeder
                 'created_at' => '2020-03-05 00:00:00',
                 'updated_at' => '2020-03-05 00:00:00',
             ),
+            2 =>
+            array(
+                'id' => 3,
+                'name' => 'Vihanga',
+                'email' => 'vihanga@gmail.com',
+                'address' => 'dfnjhjkfgjhjslf',
+                'shop_id' => Null,
+                'contact_no' => '0710390283',
+                'user_type' => 'user',
+                'password' => bcrypt('Vihanga123'),
+                'image_url' => 'ADGGHGHF456asdfre',
+                'created_at' => '2020-03-05 00:00:00',
+                'updated_at' => '2020-03-05 00:00:00',
+            ),
 
         ));
     }
