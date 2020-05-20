@@ -25,13 +25,13 @@ class OrderController extends Controller
 
                 $cart = new CartItem();
                 if ($item->quantityType->name == 'piece') {
-                    $cart->quantity = $cart_item['quantity'];
+                    $cart->quantity = $cart_item['quantity1'];
                     $total_amount = ($item->price - $item->discount) * ($cart->quantity) + $total_amount;
                 } elseif ($item->quantityType->name == 'loose') {
-                    $cart->quantity = APIHelper::getWeight($cart_item["quantityKg"], $cart_item["quantityg"]);
+                    $cart->quantity = APIHelper::getWeight($cart_item["quantity1"], $cart_item["quantity2"]);
                     $total_amount = ($item->price - $item->discount) * (($cart->quantity) / 1000) + $total_amount;
                 } else {
-                    $cart->quantity = APIHelper::getVolume($cart_item["quantityL"], $cart_item["quantityMl"]);
+                    $cart->quantity = APIHelper::getVolume($cart_item["quantity1"], $cart_item["quantity2"]);
                     $total_amount = ($item->price - $item->discount) * (($cart->quantity) / 1000) + $total_amount;
                 }
 
