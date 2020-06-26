@@ -122,7 +122,7 @@ class OrderController extends Controller
         try {
             $order = Order::where('id', $id)->with('cart')->first();
 
-            if($order->status == ('completed || rejected')){
+            if($order->status == ('completed' || 'rejected')){
                 return APIHelper::makeAPIResponse(true, "order cancellation failed, please contact the shop", null, 404);
 
             }
