@@ -38,7 +38,7 @@ class OrderController extends Controller
                 $cart->item_id = $item->id;
                 $cart->price = $item->price;
                 $cart->discount = $item->discount;
-                $cart->order_id = Order::all()->count() + 1;
+                $cart->order_id = Order::orderby('created_at', 'desc')->first()->id + 1;
                 $cart->save();
                 $order->shop_id = $item->shop_id;
                 $item->quantity = $item->quantity - $cart->quantity;
@@ -120,8 +120,23 @@ class OrderController extends Controller
     public function cancelOrder($id) //order remove item
     {
         try {
-            $order = Order::find($id);
-            $order->delete();
+            $order = Order::where('id', $id)->with('cart')->first();
+
+            if($order->status == ('completed || rejected')){
+                return APIHelper::makeAPIResponse(true, "order cancellation failed, please contact the shop", null, 404);
+
+            }
+            else{
+                foreach ($order->cart as $cartItem) {
+                    $item = Item::find($cartItem->item_id);
+                    $item->quantity = $cartItem->quantity + $item->quantity;
+                    $item->save();
+                }
+                $order->status = "customer cancelled";
+                $order->save();
+                return APIHelper::makeAPIResponse(true, "order Cancelled", null, 200);
+            }
+
 
             return APIHelper::makeAPIResponse(true, "order Cancelled", null, 200);
         } catch (\Exception $e) {
