@@ -19,6 +19,8 @@ class CreateCartItemsTable extends Migration
             $table->decimal('price')->nullable();
             $table->decimal('discount')->nullable();
             $table->bigInteger('item_id')->nullable();
+            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('shop_id')->nullable();
             $table->string('quantity')->nullable();
             $table->timestamps();
         });

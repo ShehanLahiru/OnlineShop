@@ -41,19 +41,19 @@ Route::middleware(['jwt'])->group(function (){
         Route::get('/getAllItem/{shop_id}', 'API\ItemController@getAllItem');
         Route::get('/getItemById/{item_id}', 'API\ItemController@getItemById');
 
-        // //cart
-        // Route::post('/addToCart', 'API\CartItemController@addToCart');
-        // Route::get('/getAllCartItems/{shop_id}', 'API\CartItemController@getAllCartItems');
-        // Route::get('/getCartItemById/{id}', 'API\CartItemController@getCartItemById');
-        // Route::delete('/removeItem/{id}', 'API\CartItemController@removeItem');
+        //cart
+        Route::post('/addToCart', 'API\CartItemController@addToCart');
+        Route::get('/getAllCartItems/{shop_id}', 'API\CartItemController@getAllCartItems');
+        Route::get('/getCartItemById/{id}', 'API\CartItemController@getCartItemById');
+        Route::delete('/removeItem/{id}', 'API\CartItemController@removeItem');
 
         //order
-        Route::post('/addToOrder', 'API\OrderController@addToOrder');
+        Route::post('/addToOrder/{shop_id}', 'API\OrderController@addToOrder');
         Route::get('/getAllOrders/{shop_id}', 'API\OrderController@getAllOrders');
         Route::get('/getOrderById/{id}', 'API\OrderController@getOrderById');
         Route::delete('/cancelOrder/{id}', 'API\OrderController@cancelOrder');
 
-        //quantityType  
+        //quantityType
         Route::get('/getQuantityType/{id}', 'API\QuantityTypeController@getQuantityType');
 
     });

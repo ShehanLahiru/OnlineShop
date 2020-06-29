@@ -67,7 +67,7 @@ class OrderController extends Controller
         }
 
     }
-    public function changeStatus(Request $request,$id)
+    public function changeStatus(Request $request,$id)//reject remove item
     {
         $order = Order::find($id);
         $order->status = $request->input('status');

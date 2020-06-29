@@ -58,6 +58,7 @@ class UserController extends Controller
                     $data = array();
                     $data['name'] = $user->name;
                     $data['address'] = $user->address;
+                    $data['image_url'] = $user->image_url;
                     $data['token'] = $token;
                     return APIHelper::makeAPIResponse(true, "Logged in", $data, 200);
                 }
@@ -150,7 +151,7 @@ class UserController extends Controller
                 $user->image_url = $url;
             }
             $saved = $user->save();
-            return APIHelper::makeAPIResponse(true, "User Profile Updated", null, 200);
+            return APIHelper::makeAPIResponse(true, "User Profile Updated", $user->image_url, 200);
         } catch (\Exception $e) {
             report($e);
             return APIHelper::makeAPIResponse(false, "Service error", null, 500);
